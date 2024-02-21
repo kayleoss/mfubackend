@@ -1,9 +1,12 @@
-const express = require("express");
-var cors = require('cors')
-const app = express();
+const express = require("express"),
+                app = express(),
+                bodyParser = require('body-parser');
+const cors = require('cors');
 app.use(express.json());
-app.use(cors())
-require('dotenv').config()
+app.use(cors());
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+require('dotenv').config();
 
 const { MongoClient } = require("mongodb");
 
@@ -18,7 +21,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-    res.send(`This is a test /`);
+    res.render('forms', {message: ""})
 });
 
 app.get("/featured", async (req, res) => {
@@ -40,6 +43,27 @@ app.get("/images/:cat", async (req, res) => {
     const cat = req.params.cat;
     const images = await db.collection('images').find({category: cat}).toArray();
     res.json(images)
+})
+
+app.post("/", (req, res) => {
+    const img = {
+        name: req.body.photo_name,
+        src: req.body.src,
+        description: req.body.desc,
+        price: req.body.price,
+        purchaseLink: req.body.link,
+        category: req.body.category
+    }
+
+    try {
+        db.collection('images').insertOne(img)
+        res.render("forms", {message: "<p class='success'>Sucessfully added new picture</p>"})
+    } catch (e) {
+        console.log(e)
+        res.render("forms", {message: "<p class='fail'>Failed to add</p>"})
+    }
+
+    
 })
 
 app.listen(process.env.PORT || 5000, process.env.IP, ()=> {

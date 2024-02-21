@@ -1,0 +1,60 @@
+
+<div>
+    <h1>Add Image</h1>
+    <%- message %>
+    <form action="/" method="POST">
+        <label for="photo_name">Name: </label><br>
+        <input type="text" name="photo_name" /><br>
+
+        <label for="desc">Description: </label><br>
+        <input type="text" name="desc" /><br>
+
+        <label for="src">Image URL: </label><br>
+        <input type="text" name="src" /><br>
+
+        <label for="price">Price: </label><br>
+        <input type="number" name="price" /><br>
+
+        <label for="link">Purchase Link: </label><br>
+        <input type="text" name="link" /><br>
+
+        <label for="category">Category:</label><br>
+        <select name="category">
+        <option value="architecture">Architecture</option>
+        <option value="nature">Nature</option>
+        <option value="creative">Creative</option>
+        <option value="landscape">Landscape</option>
+        <option value="street">Street</option>
+        <option value="wildlife">Wildlife</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<style>
+    h1, p {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .success, .fail {
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 2rem;
+    }
+    .success {
+        color: white;
+        background: green;
+    }
+    .fail {
+        color: white;
+        background: rgb(124, 2, 2);
+    }
+    form {
+        width: 50rem;
+    }
+    input, select {
+         width: 100%;
+         padding: 10px;
+         margin-bottom: 20px;
+    }
+</style>
