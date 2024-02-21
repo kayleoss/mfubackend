@@ -19,44 +19,27 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.send(`This is a test /`);
 });
 
-app.get("/api", (req, res) => {
-    const path = `/api/item/${v4()}`;
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
-
-app.get("/api/featured", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const featuredPhotos = db.collection('featured').find().toArray();
+app.get("/featured", async (req, res) => {
+    const featuredPhotos = await db.collection('featured').find().toArray();
     res.json(featuredPhotos)
 })
 
-app.get("/api/mainfeatured", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const mainFeatures = db.collection('mainfeatured').find().toArray();
+app.get("/mainfeatured", async (req, res) => {
+    const mainFeatures = await db.collection('mainfeatured').find().toArray();
     res.json(mainFeatures)
 })
 
-app.get("/api/categories", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const cats = db.collection('categories').find().toArray();
+app.get("/categories", async (req, res) => {
+    const cats = await db.collection('categories').find().toArray();
     res.json(cats)
 })
 
-app.get("/api/images/:cat", (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+app.get("/images/:cat", async (req, res) => {
     const cat = req.params.cat;
-    const images = db.collection('images').find({category: cat}).toArray();
+    const images = await db.collection('images').find({category: cat}).toArray();
     res.json(images)
 })
 
