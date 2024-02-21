@@ -45,3 +45,5 @@ app.get("/images/:cat", async (req, res) => {
 app.listen(process.env.PORT || 5000, process.env.IP, ()=> {
   console.log('Server running')
 })
+
+module.exports = app;
