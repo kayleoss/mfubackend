@@ -6,7 +6,6 @@ app.use(express.json());
 app.use(cors())
 require('dotenv').config()
 
-
 const { MongoClient } = require("mongodb");
 
 const uri = process.env.ATLAS_URI;
