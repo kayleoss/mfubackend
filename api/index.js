@@ -1,9 +1,11 @@
 const express = require("express");
+const { v4 } = require('uuid');
 var cors = require('cors')
 const app = express();
 app.use(express.json());
 app.use(cors())
 require('dotenv').config()
+
 
 const { MongoClient } = require("mongodb");
 
@@ -17,8 +19,11 @@ async function run() {
 }
 run().catch(console.dir);
 
-app.get("/", (req, res) => {
-    res.send("Homepage /"); 
+app.get("/api", (req, res) => {
+    const path = `/api/item/${v4()}`;
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
 app.get("/featured", async (req, res) => {
