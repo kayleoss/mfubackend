@@ -31,32 +31,32 @@ app.get("/api", (req, res) => {
     res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
-app.get("/api/featured", async (req, res) => {
+app.get("/api/featured", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const featuredPhotos = await db.collection('featured').find().toArray();
+    const featuredPhotos = db.collection('featured').find().toArray();
     res.json(featuredPhotos)
 })
 
-app.get("/api/mainfeatured", async (req, res) => {
+app.get("/api/mainfeatured", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const mainFeatures = await db.collection('mainfeatured').find().toArray();
+    const mainFeatures = db.collection('mainfeatured').find().toArray();
     res.json(mainFeatures)
 })
 
-app.get("/api/categories", async (req, res) => {
+app.get("/api/categories", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    const cats = await db.collection('categories').find().toArray();
+    const cats = db.collection('categories').find().toArray();
     res.json(cats)
 })
 
-app.get("/api/images/:cat", async (req, res) => {
+app.get("/api/images/:cat", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const cat = req.params.cat;
-    const images = await db.collection('images').find({category: cat}).toArray();
+    const images = db.collection('images').find({category: cat}).toArray();
     res.json(images)
 })
 
