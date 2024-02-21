@@ -32,21 +32,29 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/api/featured", async (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const featuredPhotos = await db.collection('featured').find().toArray();
     res.json(featuredPhotos)
 })
 
 app.get("/api/mainfeatured", async (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const mainFeatures = await db.collection('mainfeatured').find().toArray();
     res.json(mainFeatures)
 })
 
 app.get("/api/categories", async (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const cats = await db.collection('categories').find().toArray();
     res.json(cats)
 })
 
 app.get("/api/images/:cat", async (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const cat = req.params.cat;
     const images = await db.collection('images').find({category: cat}).toArray();
     res.json(images)
